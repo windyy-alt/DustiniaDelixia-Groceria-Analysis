@@ -177,7 +177,7 @@ Pastikan environment sudah memiliki:
 ## 7. Dashboard 
 <img width="1345" height="811" alt="Screenshot 2026-06-10 191133" src="https://github.com/user-attachments/assets/1882c9c6-d32d-4f9c-9f43-63b7059ac203" />
 <img width="1346" height="770" alt="Screenshot 2026-06-10 191300" src="https://github.com/user-attachments/assets/edcbf926-8773-42b7-b203-32ec85ecc927" />
-<img width="1349" height="759" alt="Screenshot 2026-06-10 191326" src="https://github.com/user-attachments/assets/f6ffaffc-6929-49a8-a5e2-49f96f40bb57" />
+<img width="1350" height="625" alt="Screenshot 2026-06-10 191834" src="https://github.com/user-attachments/assets/3888b82f-b6ff-43a3-9f7c-bb54b7428ea7" />
 <img width="1348" height="927" alt="Screenshot 2026-06-10 190455" src="https://github.com/user-attachments/assets/a3c61260-852c-4d31-a33d-c524a4e81bf4" />
 <img width="1348" height="511" alt="Screenshot 2026-06-10 190523" src="https://github.com/user-attachments/assets/fc4fefa5-f4d7-4b11-b5ed-861c034ad920" />
 <img width="1351" height="987" alt="Screenshot 2026-06-10 190551" src="https://github.com/user-attachments/assets/cad8cf0c-d64c-4131-bc40-808154d90d6a" />
