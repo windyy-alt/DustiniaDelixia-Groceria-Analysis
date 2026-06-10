@@ -175,20 +175,18 @@ Pastikan environment sudah memiliki:
 5. Jika pipeline berhasil dijalankan, data akan masuk ke tabel-tabel di ClickHouse untuk dianalisis lebih lanjut.
 
 ## 7. Dashboard 
-<img width="1341" height="807" alt="Screenshot 2026-06-10 190214" src="https://github.com/user-attachments/assets/8a6b372c-ae9b-4f30-aa0c-475260d524d8" />
-<img width="1338" height="775" alt="Screenshot 2026-06-10 190240" src="https://github.com/user-attachments/assets/7a35a721-f586-46b2-9c56-87c10601f04e" />
-<img width="1341" height="632" alt="Screenshot 2026-06-10 190320" src="https://github.com/user-attachments/assets/32142db6-4d3d-445a-bcb8-23a40ffcd615" />
-<img width="1341" height="632" alt="Screenshot 2026-06-10 190320 - Copy" src="https://github.com/user-attachments/assets/4f6f4f64-22fe-4323-97ad-65feb33c4371" />
-<img width="1348" height="927" alt="Screenshot 2026-06-10 190455" src="https://github.com/user-attachments/assets/4fa45869-bb6a-4dba-b8f6-e85c5a976155" />
-<img width="1348" height="511" alt="Screenshot 2026-06-10 190523" src="https://github.com/user-attachments/assets/28a84874-802a-41c0-8c7a-8188c5451fd9" />
-<img width="1351" height="987" alt="Screenshot 2026-06-10 190551" src="https://github.com/user-attachments/assets/e1017b83-62f7-40be-819a-6d6da721a7cd" />
-<img width="1348" height="210" alt="Screenshot 2026-06-10 190623" src="https://github.com/user-attachments/assets/e09e2f1c-f768-4896-87e3-f3896d3f1229" />
-<img width="1345" height="1058" alt="Screenshot 2026-06-10 190641" src="https://github.com/user-attachments/assets/11f6429b-f925-47f5-8715-5144e0894380" />
-<img width="1347" height="514" alt="Screenshot 2026-06-10 190700" src="https://github.com/user-attachments/assets/4870b6e4-356f-489f-a3f9-1af550b5bb0f" />
+<img width="1345" height="811" alt="Screenshot 2026-06-10 191133" src="https://github.com/user-attachments/assets/1882c9c6-d32d-4f9c-9f43-63b7059ac203" />
+<img width="1346" height="770" alt="Screenshot 2026-06-10 191300" src="https://github.com/user-attachments/assets/edcbf926-8773-42b7-b203-32ec85ecc927" />
+<img width="1349" height="759" alt="Screenshot 2026-06-10 191326" src="https://github.com/user-attachments/assets/f6ffaffc-6929-49a8-a5e2-49f96f40bb57" />
+<img width="1348" height="927" alt="Screenshot 2026-06-10 190455" src="https://github.com/user-attachments/assets/a3c61260-852c-4d31-a33d-c524a4e81bf4" />
+<img width="1348" height="511" alt="Screenshot 2026-06-10 190523" src="https://github.com/user-attachments/assets/fc4fefa5-f4d7-4b11-b5ed-861c034ad920" />
+<img width="1351" height="987" alt="Screenshot 2026-06-10 190551" src="https://github.com/user-attachments/assets/cad8cf0c-d64c-4131-bc40-808154d90d6a" />
+<img width="1348" height="210" alt="Screenshot 2026-06-10 190623" src="https://github.com/user-attachments/assets/addc5b7f-041c-41a5-9806-8478a8614f98" />
+<img width="1345" height="1058" alt="Screenshot 2026-06-10 190641" src="https://github.com/user-attachments/assets/c33c9de3-ed05-4ffd-b277-eba59e41dc2e" />
+<img width="1347" height="514" alt="Screenshot 2026-06-10 190700" src="https://github.com/user-attachments/assets/d9bfa0bc-4d86-47a6-bc17-8cdaebabb14f" />
+
 
 
 
 
 *Dibuat untuk keperluan Final Project Seleksi Camin MCI - Dilbina Windi A.*
-
-
