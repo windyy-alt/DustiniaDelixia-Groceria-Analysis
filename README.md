@@ -1,11 +1,14 @@
-# DustiniaDelixia Pipeline
+# DUSTINIADELIXIA GROCERIA - FINANCE ANALYSIS
 
-Project ini adalah pipeline data analytics berbasis Apache Airflow yang digunakan untuk mengekstrak, memvalidasi, lalu memproses dataset e-commerce ke dalam database analitik ClickHouse. Selain itu, project ini juga menyiapkan antarmuka visualisasi data lewat Metabase, sehingga hasil analisis bisa langsung dipakai untuk dashboard atau eksplorasi data.
+| Nama | NRP |
+|----------|----------|
+| Dilbina Windi Azahra    | 5025241180    |
+
+Project ini adalah pipeline data analytics berbasis Apache Airflow yang digunakan untuk mengekstrak, memvalidasi, lalu memproses dataset e-commerce ke dalam database analitik ClickHouse. Selain itu, project ini juga terdapat visualisasi data lewat Metabase, sehingga hasil analisis bisa langsung dipakai untuk dashboard atau eksplorasi data.
 
 ## 1. Tujuan project
 
-Project ini dibuat untuk menangani alur data dari file CSV ke warehouse analitik secara otomatis. Secara umum, project ini bertujuan untuk:
-
+Project ini dibuat untuk menangani alur data dari file CSV hingga ke visualisasi metabase. Secara umum, project ini bertujuan untuk:
 - memvalidasi keberadaan semua file dataset yang dibutuhkan,
 - menjalankan proses ETL (Extract, Transform, Load) secara otomatis,
 - menyimpan data ke dalam tabel analitik di ClickHouse,
@@ -16,87 +19,62 @@ Project ini dibuat untuk menangani alur data dari file CSV ke warehouse analitik
 
 Arsitektur project ini terdiri dari beberapa komponen:
 
-1. Airflow sebagai orchestrator utama.
+1. Airflow sebagai penggerak utama.
    - Airflow mengatur urutan eksekusi task.
    - DAG utama didefinisikan di `dags/pipeline.py`.
 
 2. Script Python sebagai worker ETL.
    - `extract_dataset.py` memeriksa data mentah.
-   - `process_dataset.py` membaca CSV, membersihkan tipe data, lalu mengisi ClickHouse.
+   - `process_dataset.py` membersihkan tipe data, lalu mengisi ClickHouse.
 
 3. ClickHouse sebagai tempat data analitik.
    - Semua tabel hasil olahan disimpan di database `analytics`.
    - Data ini nantinya bisa dipakai untuk query analitik, dashboard, atau laporan.
 
-4. Metabase sebagai layer visualisasi.
-   - Metabase menghubungkan data dari ClickHouse dan memudahkan analisis visual.
+4. Metabase sebagai tempat visualisasi.
+   - Metabase menghubungkan data dari ClickHouse dan membuat analisis secara visual untuk dashboard.
 
 ## 3. Struktur folder dan fungsi tiap file
 
-### Folder utama
+## Struktur folder
 
-- `dags/`
-  - Berisi definisi workflow Airflow.
-  - Di dalamnya terdapat file DAG dan script ETL pendukung.
+```text
+DustiniaDelixia-pipeline/
+│
+├── dags/
+│   ├── pipeline.py
+│   └── scripts/
+│       ├── extract_dataset.py
+│       └── process_dataset.py
+│
+├── data/
+│
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+└── metabase.sql
+```
 
-- `dags/pipeline.py`
-  - File ini mendefinisikan DAG bernama `DustiniaDelixia_pipeline`.
-  - DAG ini menjalankan dua task secara berurutan:
-    1. `extract_dataset`
-    2. `process_dataset`
-  - Artinya, proses akan berhenti di task pertama jika data tidak valid.
+### Description
 
-- `dags/scripts/`
-  - Folder ini menyimpan logika ETL yang dipanggil oleh Airflow.
+* **dags/** : Berisi workflow Airflow dan script ETL yang digunakan dalam pipeline.
+* **pipeline.py** : Mendefinisikan DAG utama yang menjalankan proses validasi dataset dan pemrosesan data.
+* **scripts/** : Berisi script ETL yang digunakan oleh Airflow.
+* **extract_dataset.py** : Memvalidasi keberadaan dan keterbacaan dataset sebelum proses ETL dijalankan.
+* **process_dataset.py** : Melakukan transformasi data, pembuatan tabel ClickHouse, dan proses loading data ke database analytics.
+* **data/** : Berisi dataset mentah dalam format CSV.
+* **docker-compose.yml** : Konfigurasi layanan Docker yang digunakan dalam project.
+* **Dockerfile** : Konfigurasi image Airflow beserta dependency tambahan.
+* **requirements.txt** : Daftar library Python yang digunakan.
+* **metabase.sql** : Kumpulan query analitik untuk eksplorasi data dan dashboard.
 
-- `dags/scripts/extract_dataset.py`
-  - Script ini berfungsi sebagai pemeriksa data awal.
-  - Ia memeriksa semua file CSV yang diharapkan ada di folder `data/`.
-  - Jika ada file yang hilang atau gagal dibaca, script akan mengangkat error.
-  - Tujuan utamanya adalah memastikan pipeline tidak berjalan jika dataset tidak lengkap.
+### DAG Airflow
+<img width="1916" height="1037" alt="Screenshot 2026-05-30 230006" src="https://github.com/user-attachments/assets/b57aedd9-4acb-4dfd-a4ed-b77e5fc61634" />
 
-- `dags/scripts/process_dataset.py`
-  - Script ini adalah inti pipeline processing.
-  - Ia melakukan beberapa hal:
-    - membuat database `analytics` jika belum ada,
-    - membuat tabel-tabel analitik di ClickHouse,
-    - membaca file CSV dari folder `data/`,
-    - mengubah kolom tertentu menjadi tipe numerik atau tanggal,
-    - membersihkan nilai kosong menjadi `None`,
-    - mengisi data ke tabel ClickHouse,
-    - membuat tabel tambahan `customer_rfm` untuk analisis segmentasi pelanggan.
+### Metabase
+<img width="1920" height="780" alt="image" src="https://github.com/user-attachments/assets/faf30754-e72c-405b-be61-5b700b4bc7e2" />
 
-- `data/`
-  - Folder ini berisi dataset mentah dalam bentuk CSV.
-  - Dataset yang digunakan biasanya mencakup:
-    - `customers.csv`
-    - `orders.csv`
-    - `order_items.csv`
-    - `order_payments.csv`
-    - `products.csv`
-    - `sellers.csv`
-    - dan file pendukung lain seperti `mql.csv`, `closed_deals.csv`, `geolocation.csv`, `reviews`, dan `category_translation.csv`.
 
-- `docker-compose.yml`
-  - Menentukan seluruh layanan yang berjalan di project ini.
-  - Layanan yang tersedia:
-    - Airflow Web Server
-    - Airflow Scheduler
-    - PostgreSQL (untuk metadata Airflow)
-    - ClickHouse Server
-    - Metabase
-
-- `Dockerfile`
-  - Digunakan untuk membangun image Airflow.
-  - Image ini menginstal Java Runtime Environment (JRE) karena project ini juga memakai Spark/PySpark.
-
-- `requirements.txt`
-  - Daftar dependency Python yang dipasang di environment Airflow.
-  - Contohnya: `pandas`, `pyspark`, `clickhouse-driver`, `requests`, dan `pyarrow`.
-
-- `metabase.sql`
-  - Berisi contoh query analitik yang bisa dipakai untuk eksplorasi data di Metabase.
-  - File ini berguna untuk analisis awal, misalnya menghitung jumlah baris tiap tabel atau memeriksa missing value.
 
 ## 4. Alur kerja pipeline secara detail
 
@@ -105,13 +83,13 @@ Arsitektur project ini terdiri dari beberapa komponen:
 Saat DAG dijalankan, task pertama yang aktif adalah `extract_dataset`.
 
 Fungsi yang berjalan:
-- membaca daftar file yang wajib ada,
-- memeriksa apakah file tersebut ada di folder `data/`,
-- membaca isi file menggunakan `pandas`,
-- menghitung jumlah baris, jumlah kolom, dan ukuran file,
-- menampilkan log status untuk setiap file.
+- membaca daftar file yang wajib ada
+- memeriksa apakah file tersebut ada di folder `data/`
+- membaca isi file menggunakan `pandas`
+- menghitung jumlah baris, jumlah kolom, dan ukuran file
+- menampilkan log status untuk setiap file
 
-Jika ada file yang hilang atau gagal dibaca, pipeline akan langsung gagal. Ini penting agar proses tidak lanjut ke tahap loading dengan data yang tidak lengkap.
+Jika ada file yang hilang atau gagal dibaca, pipeline akan langsung gagal.
 
 ### Langkah 2: Proses transform dan load ke ClickHouse
 
@@ -129,9 +107,9 @@ Proses yang dilakukan:
    - `orders`
    - `products`
 3. Mengubah kolom tertentu menjadi tipe data yang lebih sesuai:
-   - kolom angka menjadi numeric,
-   - kolom tanggal menjadi `datetime`,
-   - nilai kosong diubah menjadi `None`.
+   - kolom angka menjadi numeric
+   - kolom tanggal menjadi `datetime`
+   - nilai kosong diubah menjadi `None`
 4. Menghapus isi tabel lama (`TRUNCATE`) lalu mengisi data baru dari CSV ke ClickHouse.
 5. Membuat tabel tambahan `customer_rfm` untuk analisis pelanggan.
 
@@ -139,18 +117,19 @@ Proses yang dilakukan:
 
 Tabel `customer_rfm` dihitung berdasarkan kombinasi:
 
-- Recency: seberapa baru pelanggan melakukan pesanan terakhir,
-- Frequency: seberapa sering pelanggan membeli,
-- Monetary: total nilai transaksi pelanggan.
+- Recency: seberapa baru pelanggan melakukan pesanan terakhir
+- Frequency: seberapa sering pelanggan membeli
+- Monetary: total nilai transaksi pelanggan
 
-Hasil analisis ini kemudian diberi skor dan segmentasi seperti:
+Setiap pelanggan diberikan skor 1–4 untuk masing-masing komponen RFM berdasarkan distribusi data (quartile). Skor RFM kemudian dijumlahkan dan digunakan untuk mengelompokkan pelanggan ke dalam beberapa segmen:
 - Champions
 - Loyal
 - Potential
 - At Risk
 - Hibernating
 
-Segmentasi ini sangat berguna untuk memahami perilaku pelanggan secara bisnis.
+<img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/3e8b380f-0766-4ca3-9d39-c2695cf30ae9" />
+
 
 ## 5. Teknologi yang digunakan
 
@@ -162,17 +141,7 @@ Segmentasi ini sangat berguna untuk memahami perilaku pelanggan secara bisnis.
 - Metabase untuk visualisasi dan query dashboard.
 - Docker Compose untuk menjalankan seluruh stack secara terintegrasi.
 
-## 6. Dependency utama
-
-Package yang digunakan dalam project ini antara lain:
-
-- `pyspark==3.5.1`
-- `clickhouse-driver==0.2.7`
-- `pandas==2.2.1`
-- `requests==2.31.0`
-- `pyarrow==15.0.2`
-
-## 7. Cara menjalankan project
+## 6. Cara menjalankan project
 
 ### Prasyarat
 
@@ -191,6 +160,8 @@ Pastikan environment sudah memiliki:
 2. Jalankan seluruh layanan:
 
    ```bash
+   docker-compose build
+   docker-compose up airflow init
    docker-compose up -d
    ```
 
@@ -201,23 +172,18 @@ Pastikan environment sudah memiliki:
 
 4. Buka Airflow, lalu jalankan DAG `DustiniaDelixia_pipeline`.
 
-5. Jika pipeline berhasil dijalankan, data akan masuk ke tabel-tabel di ClickHouse dan siap untuk dianalisis lebih lanjut.
+5. Jika pipeline berhasil dijalankan, data akan masuk ke tabel-tabel di ClickHouse untuk dianalisis lebih lanjut.
 
-## 8. Catatan penting
+## 7. Dashboard 
+<img width="1334" height="1079" alt="image" src="https://github.com/user-attachments/assets/0e8b79ef-5dbf-45e2-9d2f-3c6daff82126" />
+<img width="1333" height="1079" alt="image" src="https://github.com/user-attachments/assets/5dc9f5ae-ad0a-42cf-9f3e-a43824b05ecb" />
+<img width="1337" height="1079" alt="image" src="https://github.com/user-attachments/assets/882f78ce-038e-4dfc-a05f-1d12255b0417" />
+<img width="1339" height="527" alt="image" src="https://github.com/user-attachments/assets/54114125-f89b-4fc2-aa6c-efb41ab8fd86" />
+<img width="1340" height="756" alt="Screenshot 2026-06-10 131755" src="https://github.com/user-attachments/assets/848de706-a815-4681-8c35-715c50bf508c" />
+<img width="1338" height="1079" alt="Screenshot 2026-06-10 131818" src="https://github.com/user-attachments/assets/ded29c7e-5283-4346-806e-2424a7533513" />
+<img width="1344" height="576" alt="Screenshot 2026-06-10 131834" src="https://github.com/user-attachments/assets/c68edfe6-8ff4-4206-8a0b-3e3875377514" />
 
-- Dataset CSV harus tersedia di folder `data/` sebelum pipeline dijalankan.
-- Airflow menggunakan PostgreSQL sebagai database metadata.
-- ClickHouse digunakan sebagai storage analitik untuk data hasil ETL.
-- Jika terjadi error, cek log di Airflow atau log container Docker untuk melihat file mana yang gagal.
-- File `metabase.sql` bisa dipakai sebagai referensi query untuk eksplorasi awal.
 
-## 9. Ringkasan singkat
+*Dibuat untuk keperluan Final Project Seleksi Camin MCI - Dilbina Windi A.*
 
-Project ini adalah contoh pipeline data end-to-end yang menggabungkan:
 
-- Airflow untuk orkestrasi,
-- Python untuk ETL,
-- ClickHouse untuk penyimpanan analitik,
-- Metabase untuk visualisasi.
-
-Dengan struktur ini, data mentah dari CSV bisa diproses secara otomatis menjadi data siap analisis yang bisa ditampilkan di dashboard atau dipakai untuk laporan bisnis.
